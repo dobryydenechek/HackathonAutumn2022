@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}
+CREATE PERSONE
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <main>
+      
+      <div class="row g-5">
+        <div class="col-md-3 col-lg-2"></div>
+        <div class="col-md-6 col-lg-8">
+          <h4 class="mb-3">Create Persone form</h4>
+
+          <form class="needs-validation" novalidate="" method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">First name</label>
+                <input name="firstname" type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input name="lastname" type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="Old" class="form-label">Old</label>
+                <input name="old" type="text" class="form-control" id="Old" placeholder="" value="" required="">
+                <div class="invalid-feedback">
+                  Valid old is required.
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="telephone" class="form-label">Telephone</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text">+7</span>
+                  <input name="telephone" type="text" class="form-control" id="telephone" placeholder="Telephone" required="">
+                  <div class="invalid-feedback">
+                    Your telephone is required.
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" id="email" placeholder="you@example.com">
+                <div class="invalid-feedback">
+                  Please enter a valid email address for shipping updates.
+                </div>
+              </div>
+
+
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label for="firstName" class="form-label">Password</label>
+                  <input name="password1" type="password" class="form-control" id="firstName" placeholder="" value="" required="">
+                  <div class="invalid-feedback">
+                    Password need to include numbers and strings.
+                  </div>
+                </div>
+    
+                <div class="col-sm-6">
+                  <label for="lastName" class="form-label">Repeat password</label>
+                  <input name="password2" type="password" class="form-control" id="lastName" placeholder="" value="" required="">
+                  <div class="invalid-feedback">
+                    Repeat password.
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-md-5">
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" id="country" required="">
+                  <option value="">Choose...</option>
+                  <option>Georgia</option>
+                  <option>Russia</option>
+                  <option>Kazahstan</option>
+                  <option>Armenia</option>
+                  <option>...</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid Country.
+                </div>
+              </div>
+  
+              <div class="col-md-4">
+                <label for="city" class="form-label">City</label>
+                <select class="form-select" id="city" required="">
+                  <option value="">Choose...</option>
+                  <option>Moscow</option>
+                  <option>Saint Peterburg</option>
+                  <option>Rostov-on-Don</option>
+                  <option>Taganrog</option>
+                  <option>...</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid city.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="street" class="form-label">Street</label>
+                <select class="form-select" id="street" required="">
+                  <option value="">Choose...</option>
+                  <option>Voroshilovskii</option>
+                  <option>B.Sadovaya</option>
+                  <option>Pushkinskaya</option>
+                  <option>Krasnoarmeiskaya</option>
+                  <option>...</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid street.
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="build" class="form-label">Build</label>
+                <select class="form-select" id="build" required="">
+                  <option value="">Choose...</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>13</option>
+                  <option>4/2</option>
+                  <option>...</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid build.
+                </div>
+              </div>  
+            <hr class="my-4">
+  
+            
+            <h4 class="mb-3">Male</h4>
+  
+            <div class="my-3">
+              <div class="form-check">
+                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked="" required="">
+                <label class="form-check-label" for="credit">Man</label>
+              </div>
+              <div class="form-check">
+                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required="">
+                  <label class="form-check-label" for="debit">Woman</label>
+              </div>
+            </div>
+
+            <br>
+            <hr>
+            <div class="row">
+              <div class="col-6 p-1">
+                <button class="w-100 btn btn-primary" type="submit">Sign in</button>
+              </div>
+              <div class="col-6 p-1">
+                <a class="w-100 btn btn-primary" href="{% url 'signup' %}">Sign up</a>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </main>
+  
+  </div>
+
+  <br><br><br>
+
+{% endblock %}
