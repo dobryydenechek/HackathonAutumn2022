@@ -10,9 +10,6 @@ services:
     volumes:
       - _postgres_data:/var/lib/postgresql/data
     restart: on-failure:3
-    networks:
-      - pgadmin
-      - back
 
   pgadmin:
     image: dpage/pgadmin4
@@ -25,8 +22,6 @@ services:
     depends_on:
       - postgres
     restart: on-failure:3
-    networks:
-      - postgres
 
   back:
     build: .
@@ -40,13 +35,6 @@ services:
     depends_on:
       - postgres
     restart: on-failure:3
-    networks:
-      - postgres
-
-networks:
-  postgres:
-  pgadmin:
-  back:
 
 volumes:
   _postgres_data:
