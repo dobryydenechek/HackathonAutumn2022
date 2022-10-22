@@ -1,0 +1,9 @@
+.alert_box {
+    position: fixed;
+    top: 20px;
+    left: 60px;
+    right: 60px;
+}
+.max-c {
+    width: max-content;
+}

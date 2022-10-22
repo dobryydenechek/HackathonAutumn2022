@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+
+{% block title %}
+PERSONE VIEW
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-sm">
+            <tbody>
+                <tr><td>First Name</td><td>{{ persone.firstname }}</td></tr>
+                <tr><td>Last Name</td><td>{{ persone.lastname }}</td></tr>
+                <tr><td>Telephone</td><td>{{ persone.telephone }}</td></tr>
+                <tr><td>Email</td><td>{{ persone.email }}</td></tr>
+                <tr><td>Old</td><td>{{ persone.old }}</td></tr>
+                <tr><td>Male</td><td>{{ persone.get_male }}</td></tr>
+                <tr><td>Address</td><td>{{ persone.adres }}</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-6">
+        <form action="{% url 'upload_pcap' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label" for="imageCustomFile">Upload PCAP</label>
+                <input type="hidden" name="pk" value="{{ persone.pk }}">
+                <input name="files" required="" type="file" class="form-control" id="PCAPFile" multiple>
+            </div>
+
+            <button class="btn btn-outline-dark" type="submit">Upload PCAP's</button>
+        </form>
+    </div>
+</div>
+<br><br><br>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Date upload</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>First Name</td>
+            <td>{{ persone.firstname }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
