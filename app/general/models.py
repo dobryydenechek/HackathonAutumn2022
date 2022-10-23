@@ -39,17 +39,27 @@ class_names = {
 
 class Trafic(models.Model):
     CHOICES = [
-        (1, 'chats'),
-        (2, 'voice_chats'),
-        (3, 'video'),
-        (4, 'audio'),
-        (5, 'files'),
-        (6, 'email')
+        (0, 'chats'),
+        (1, 'video'),
+        (2, 'files'),
+        (3, 'email'),
+        (4, 'sftp'),
+        (5, 'ftps')
     ]
-    persone = models.ForeignKey('Persone', on_delete=models.CASCADE, **bnt)
-    type  = models.SmallIntegerField(choices=CHOICES ,**bnt)
-    start = models.IntegerField(**bnt)
-    end   = models.IntegerField(**bnt)
+    package   = models.ForeignKey('Package', on_delete=models.CASCADE, **bnt)
+    type      = models.IntegerField(choices=CHOICES ,**bnt)
+    sport     = models.CharField(max_length=50, **bnt)
+    dport     = models.CharField(max_length=50, **bnt)
+    seq       = models.CharField(max_length=50, **bnt)
+    ask       = models.CharField(max_length=50, **bnt)
+    dataofs   = models.CharField(max_length=50, **bnt)
+    window    = models.CharField(max_length=50, **bnt)
+    chksum    = models.CharField(max_length=50, **bnt)
+    timestamp = models.CharField(max_length=50, **bnt)
+
+    def get_type(self):
+        for i, s in self.CHOICES:
+            if i == self.type: return s
 
 
 class Group(models.Model):
@@ -57,11 +67,10 @@ class Group(models.Model):
 
 def get_pcap_upload_to(instance, filename):
     t = datetime.now()
-    return f'upload/persone_pk_{instance.persone.pk}/{t.year}/{t.month}/{t.day}/{t.time()}/pcap/{filename}'
+    return f'upload/persone_pk_{instance.persone.pk}/{t.year}/{t.month}/{t.day}/{t.time().minute}/pcap/{filename}'
 
 def get_csv_upload_to(instance, filename):
-    t = datetime.now()
-    return f'upload/persone_pk_{instance.persone.pk}/{t.year}/{t.month}/{t.day}/{t.time()}/csv/{filename}'
+    return f'upload/'
 
 class Package(models.Model):
     date_create = models.DateTimeField(auto_now_add=True, **bnt)
@@ -70,16 +79,35 @@ class Package(models.Model):
     title       = models.CharField(max_length=30, **bnt)
     pcaps       = models.ManyToManyField('PCAPFile')
     csv         = models.ForeignKey('CSVFile', on_delete=models.CASCADE, **bnt)
+    persone     = models.ForeignKey('Persone', on_delete=models.CASCADE, **bnt)
+
+    def get_types(self):
+        ts = Trafic.objects.filter(package=self)
+        r = {}
+        for c, s in Trafic.CHOICES:
+            count = ts.filter(type=c).count()
+            if count: r[s] = count
+        maxx = max([v for k, v in r])
+        return r, maxx
 
 class PCAPFile(models.Model):
-    persone = models.ForeignKey('Persone', on_delete=models.CASCADE, **bnt)
+    persone  = models.ForeignKey('Persone', on_delete=models.CASCADE, **bnt)
     filename = models.CharField(max_length=100, **bnt)
-    file = models.FileField(upload_to=get_pcap_upload_to, **bnt)
+    file     = models.FileField(upload_to=get_pcap_upload_to, **bnt)
+
+    def get_path_dir(self):
+        s = str(self.file)
+        return s[:s.rfind('/')+1]
+
 
 class CSVFile(models.Model):
     persone = models.ForeignKey('Persone', on_delete=models.CASCADE, **bnt)
     filename = models.CharField(max_length=100, **bnt)
     file = models.FileField(upload_to=get_csv_upload_to, **bnt)
+
+    def get_path_dir(self):
+        s = str(self.file)
+        return s[:s.rfind('/')]
 
 
 class Persone(models.Model):

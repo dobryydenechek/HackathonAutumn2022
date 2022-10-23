@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+{% endblock %}
+
+{% block title %}
+SHEET
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 col-sm-6">
+
+              <div>
+                {% for type, value in types.items %}
+
+                  {{ type }}
+                  <div class="progress w-100">
+                    <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: {{ value }}%" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <br>
+
+                  {% endfor %}
+                </div>
+
+            </div>
+          </div>
+          <h2>Trafic</h2>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">sport</th>
+                  <th scope="col">dport</th>
+                  <th scope="col">seq</th>
+                  <th scope="col">ask</th>
+                  <th scope="col">dataofs</th>
+                  <th scope="col">window</th>
+                  <th scope="col">chksum</th>
+                  <th scope="col">timestamp</th>
+                  <th scope="col">type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in trafics %}
+                <tr>
+                  <td>{{ row.sport }}</td>
+                  <td>{{ row.dport }}</td>
+                  <td>{{ row.seq }}</td>
+                  <td>{{ row.ask }}</td>
+                  <td>{{ row.dataofs }}</td>
+                  <td>{{ row.window }}</td>
+                  <td>{{ row.chksum }}</td>
+                  <td>{{ row.timestamp }}</td>
+                  <td>{{ row.get_type }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+{% endblock %}
+
+    
+    
+{% block scripts %}
+{% endblock %}
+    
+    
